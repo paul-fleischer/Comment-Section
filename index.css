@@ -113,9 +113,7 @@ Footer
     cursor: pointer;
 }
 
-.vote-icon img:hover {
-    filter: invert(35%) sepia(55%) saturate(1151%) hue-rotate(209deg) brightness(84%) contrast(84%);
-}
+
 
 .vote-text {
     color: var(--moderate-blue);
