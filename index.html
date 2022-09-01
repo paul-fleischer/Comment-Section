@@ -86,7 +86,7 @@
       };
 
       if (localStorage.getItem("userData") === null) {
-        localStorage.setItem("userData", JSON.stringify(data));
+        localStorage.setItem("userData", JSON.stringify(userData));
       }
       let newData = JSON.parse(localStorage.getItem("userData"));
 
@@ -106,110 +106,157 @@
 
       for (let i = 0; i < newData.comments.length; i++) {
         htmlStructure += `
-    <div class='row'>
-            <div class='card'>
-                <div class='vote'>
-                    <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].id})">
-                        ${plusSign}
-                    </div>
-                    <p id=#${newData.comments[i].id} class='vote-text'>${newData.comments[i].score}</p>
-                    <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].id})">
-                        ${minusSign}
-                    </div>
-                </div>
+      <div class='row'>
+              <div class='card'>
+                  <div class='vote'>
+                      <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].id})">
+                          ${plusSign}
+                      </div>
+                      <p id=#${newData.comments[i].id} class='vote-text'>${newData.comments[i].score}</p>
+                      <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].id})">
+                          ${minusSign}
+                      </div>
+                  </div>
 
-                <div class='header'>
-                    <div class='avatar'>
-                      <img src=${newData.comments[i].user.image.webp} alt="currentUser" />
-                    </div>
-                    <p class='name'>${newData.comments[i].user.username}</p>
-                    <p class='date'>${newData.comments[i].createdAt}</p>
-                    </div> 
-                        <div class='icon' onclick="toggle(${newData.comments[i].id});">
-                           <div class="reply">${replySign}
-                            <p>Reply</p>
+                  <div class='header'>
+                      <div class='avatar'>
+                        <img src=${newData.comments[i].user.image.webp} alt="currentUser" />
+                      </div>
+                      <p class='name'>${newData.comments[i].user.username}</p>
+                      <p class='date'>${newData.comments[i].createdAt}</p>
+                      </div>
+                          <div class='icon' onclick="toggle(${newData.comments[i].id});">
+                            <div class="reply">${replySign}
+                              <p>Reply</p>
                             </div>
-                        </div>
-                  
-                    <div class='content'>${newData.comments[i].content}</div>
-                    <div class="reply-section>
-                    <div class=reply-avatar>
-                    <img src=${newData.currentUser.image.webp} alt='profile-img' />
-                    </div>
-                   
-                   
-                    </div>
-                  <form id=replyForm${newData.comments[i].id} class='reply-form-container ;' onsubmit="event.preventDefault(); reply();"></form>
-                </div>
-            </div>
-    </div>
-            
-            `;
+                          </div>
+
+                      <div class='content'>${newData.comments[i].content}</div>
+
+                          <form id=replyForm${newData.comments[i].id} class='reply-section' onsubmit="event.preventDefault(); replyComment(${newData.comments[i].id});">
+                            <div class=reply-avatar>
+                            <img src=${newData.currentUser.image.webp} alt='profile-img' />
+                          </div>
+                          <textarea id="reply${newData.comments[i].id}" name="reply" class='' placeholder='@${newData.comments[i].user.username}' rows='4'></textarea>
+                              <button class="btn" type="submit">
+                                  Reply
+                              </button>
+                            </form>
+
+
+                  </div>
+              </div>
+      </div>
+
+              `;
 
         for (let j = 0; j < newData.comments[i].replies.length; j++) {
           // newData.comments[i].replies[i]
           htmlStructure += `
-       <div class='row'>
-        <div class='sub-card'>
-          <div class='line'></div>
-          <div class='card'>
-          <div class='vote'> 
-              <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].replies[j].id})"> ${plusSign} </div>
-                  <p id=#${newData.comments[i].replies[j].id} class='vote-text'>${newData.comments[i].replies[j].score}</p>
-                  <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].replies[j].id})">${minusSign} </div>
-          </div>
-          
-            <div class='header'>
-                <div class='avatar'>
-                    <img src=${newData.comments[i].replies[j].user.image.webp} alt="currentUser" class='replies-img' />
-                    </div>
-                          <p class='name'>${newData.comments[i].replies[j].user.username}</p>
-                          <p class='date'>${newData.comments[i].replies[j].createdAt}</p>
-                        </div>
-                      <div class='icon'>
-                        <div class='reply'>
-                           <div>${replySign}</div>
-                           <p>Reply</p>
-                          </div>
-                         </div>
-                        <div class='content'>
-                            <span class='initial'>@${newData.comments[i].replies[j].replyingTo}</span> ${newData.comments[i].replies[j].content}
-                            </div>
-                        </div>
-                        <div class='reply-section'>
-                          <div class='reply-avator'>
-                            **********
-                          </div>
+         <div class='row'>
+          <div class='sub-card'>
+            <div class='line'></div>
+            <div class='card'>
+            <div class='vote'>
+                <div class='vote-icon plus' onclick="plusOperation(${
+                  newData.comments[i].replies[j].id
+                })"> ${plusSign} </div>
+                    <p id=#${
+                      newData.comments[i].replies[j].id
+                    } class='vote-text'>${
+            newData.comments[i].replies[j].score
+          }</p>
+                    <div class='vote-icon minus' onclick="minusOperation(${
+                      newData.comments[i].replies[j].id
+                    })">${minusSign} </div>
+            </div>
 
-           </div>
-           </div>
-        </div>
-                `;
+              <div class='header'>
+                  <div class='avatar'>
+                      <img src=${
+                        newData.comments[i].replies[j].user.image.webp
+                      } alt="currentUser" class='replies-img' />
+                      </div>
+                            <p class='name'>${
+                              newData.comments[i].replies[j].user.username
+                            }</p>
+                            <p class='date'>${
+                              newData.comments[i].replies[j].createdAt
+                            }</p>
+                          </div>
+                        <div class='icon'>
+                          ${
+                            newData.currentUser.username ===
+                            newData.comments[i].replies[j].user.username
+                              ? `<button class="button-reply" onclick="confirmDelete(${newData.comments[i].replies[j].id})">
+                              <div style='margin-right:8px'>${deleteSign}</div>
+                                            <span>Delete</span></button>
+                                            <button class="button-reply"><div style='margin-right:8px'>${editSign}</div>
+                                            <span>Edit</span></button>
+                                        `
+                              : `<div class='reply' onclick="toggle(${newData.comments[i].replies[j].id});">
+                             <div>${replySign}</div>
+                             <p>Reply</p>
+                          </div>`
+                          }
+
+                           </div>
+                          <div class='content'>
+                              <span class='initial'>@${
+                                newData.comments[i].replies[j].replyingTo
+                              }</span> ${newData.comments[i].replies[j].content}
+                          </div>
+                          <form id=replyForm${
+                            newData.comments[i].replies[j].id
+                          } class='reply-section' onsubmit="event.preventDefault(); kenkey(${
+            newData.comments[i].id
+          }, ${newData.comments[i].replies[j].id})">
+                            <div class=reply-avatar>
+                            <img src=${
+                              newData.currentUser.image.webp
+                            } alt='profile-img' />
+                          </div>
+                          <textarea id="replyReply${
+                            newData.comments[i].replies[j].id
+                          }" name="replyReply${
+            newData.comments[i].replies[j].id
+          }" placeholder='@${
+            newData.comments[i].user.username
+          }' rows='4'> </textarea>
+                              <button class="btn" type="submit">
+                                  Reply
+                              </button>
+                            </form>
+                          </div>
+                          
+             </div>
+          </div>
+                  `;
         }
       }
 
       htmlStructure += `
-            <form id="row' onsubmit="event.preventDefault(); send();">
-                <div class='comment-section'>
-                    <div class='comment-avatar'>
-                        <img src=${newData.currentUser.image.webp} class='' />
-                    </div>
-                    <textarea id="post" name="post" placeholder='Add a comment...' rows='5'></textarea>
-                    <button class='btn btn send' type="submit">Send</button>
-                </div>
-            </form>
-        `;
+              <form id="row" onsubmit="event.preventDefault(); send();">
+                  <div class='comment-section'>
+                      <div class='comment-avatar'>
+                          <img src=${newData.currentUser.image.webp} class='' />
+                      </div>
+                      <textarea id="post" name="post" placeholder='Add a comment...' rows='5'></textarea>
+                      <button class='btn btn send' type="submit">Send</button>
+                  </div>
+              </form>
+          `;
 
       htmlStructure += `<div id="modal" class='module-delete'>
-            <div class='inner-module'>
-                <h3 class='module-title'>Delete comment</h3>
-                <p class='module-text'>Are you sure you want to delete this comment?. This will remove the comment and can not be undone.</p>
-                <div class="btn-wrapper">
-                    <button class="btn btn-cancel" onclick="cancelModal()">No, Cancel</button>
-                    <button class="btn btn-delete" onclick="deleteOperation()">Yes, Delete</button>
-                </div>
-            </div>
-        </div>`;
+              <div class='inner-module'>
+                  <h3 class='module-title'>Delete comment</h3>
+                  <p class='module-text'>Are you sure you want to delete this comment?. This will remove the comment and can not be undone.</p>
+                  <div class="btn-wrapper">
+                      <button class="btn btn-cancel" onclick="cancelModal()">No, Cancel</button>
+                      <button class="btn btn-delete" onclick="deleteOperation()">Yes, Delete</button>
+                  </div>
+              </div>
+          </div>`;
 
       document.querySelector("#main").innerHTML = htmlStructure;
 
@@ -265,7 +312,7 @@
 
       function confirmDelete(id) {
         let modal = document.getElementById("modal");
-        modal.classList.remove("hidden");
+        modal.style.display = "flex";
         deleteID = id;
       }
 
@@ -293,7 +340,7 @@
 
         if (post !== "") {
           let data = {
-            id: Math.floor(Math.random() * 50),
+            id: Math.floor(Math.random() * 50) + 4,
             content: post,
             createdAt: "1 day ago",
             score: 0,
@@ -315,27 +362,77 @@
 
       function toggle(id) {
         let form = document.getElementById(`replyForm${id}`);
-        if (form.classList.contains("hidden")) {
-          form.classList.remove("hidden");
+        if (form.style.display === "grid") {
+          form.style.display = "none";
+          form.classList.remove("active");
         } else {
-          form.classList.add("hidden");
+          form.style.display = "grid";
+          form.classList.add("active");
         }
       }
 
-      window.onclick = function (event) {
-        let modal = document.getElementById("modal");
-        if (event.target === modal) {
-          modal.classList.add("hidden");
-        }
-      };
-
       function cancelModal() {
+        console.log("rice");
         let modal = document.getElementById("modal");
-        if (modal.style.display !== "none") {
-          modal.style.display === "none";
-        } else {
-          modal.style.display = "block";
+        modal.style.display = "none";
+      }
+
+      function replyComment(id) {
+        let currentUser = newData.currentUser;
+        let reply = document.getElementById(`reply${id}`).value;
+
+        if (reply !== "") {
+          for (let i = 0; i < newData.comments.length; i++) {
+            if (newData.comments[i].id === id) {
+              let data = {
+                id: Math.floor(Math.random() * 50) + 4,
+                content: reply,
+                createdAt: "1 minute ago",
+                score: 0,
+                user: {
+                  image: {
+                    png: currentUser.image.png,
+                    webp: currentUser.image.webp,
+                  },
+                  username: currentUser.username,
+                },
+                replyingTo: newData.comments[i].user.username,
+              };
+              newData.comments[i].replies.push(data);
+            }
+          }
         }
+        localStorage.setItem("userData", JSON.stringify(newData));
+        window.location.reload();
+      }
+
+      function kenkey(id1, id2) {
+        let currentUser = newData.currentUser;
+        let replyReply = document.getElementById(`replyReply${id2}`).value;
+
+        if (replyReply !== "") {
+          for (let i = 0; i < newData.comments.length; i++) {
+            if (newData.comments[i].id === id1) {
+              let data = {
+                id: Math.floor(Math.random() * 50) + 4,
+                content: replyReply,
+                createdAt: "1 minute ago",
+                score: 0,
+                user: {
+                  image: {
+                    png: currentUser.image.png,
+                    webp: currentUser.image.webp,
+                  },
+                  username: currentUser.username,
+                },
+                replyingTo: newData.comments[i].user.username,
+              };
+              newData.comments[i].replies.push(data);
+            }
+          }
+        }
+        localStorage.setItem("userData", JSON.stringify(newData));
+        window.location.reload();
       }
     </script>
   </body>

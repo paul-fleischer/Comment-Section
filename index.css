@@ -369,3 +369,9 @@ textarea {
     background-color: var(--soft-red);
     font-weight: bold;
 }
+.button-reply{
+    border: none;
+    display: flex;
+    background-color: inherit;
+    
+}
