@@ -106,157 +106,159 @@
 
       for (let i = 0; i < newData.comments.length; i++) {
         htmlStructure += `
-      <div class='row'>
-              <div class='card'>
-                  <div class='vote'>
-                      <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].id})">
-                          ${plusSign}
+          <div class='row'>
+                  <div class='card'>
+                      <div class='vote'>
+                          <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].id})">
+                              ${plusSign}
+                          </div>
+                          <p id=#${newData.comments[i].id} class='vote-text'>${newData.comments[i].score}</p>
+                          <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].id})">
+                              ${minusSign}
+                          </div>
                       </div>
-                      <p id=#${newData.comments[i].id} class='vote-text'>${newData.comments[i].score}</p>
-                      <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].id})">
-                          ${minusSign}
+
+                      <div class='header'>
+                          <div class='avatar'>
+                            <img src=${newData.comments[i].user.image.webp} alt="currentUser" />
+                          </div>
+                          <p class='name'>${newData.comments[i].user.username}</p>
+                          <p class='date'>${newData.comments[i].createdAt}</p>
+                          </div>
+                              <div class='icon' onclick="toggle(${newData.comments[i].id});">
+                                <div class="reply">${replySign}
+                                  <p>Reply</p>
+                                </div>
+                              </div>
+
+                          <div class='content'>${newData.comments[i].content}</div>
+
+                              <form id=replyForm${newData.comments[i].id} class='reply-section' onsubmit="event.preventDefault(); replyComment(${newData.comments[i].id});">
+                                <div class=reply-avatar>
+                                <img src=${newData.currentUser.image.webp} alt='profile-img' />
+                              </div>
+                              <textarea id="reply${newData.comments[i].id}" name="reply" class='' placeholder='@${newData.comments[i].user.username}' rows='4'></textarea>
+                                  <button class="btn" type="submit">
+                                      Reply
+                                  </button>
+                                </form>
+
+
                       </div>
                   </div>
+          </div>
 
-                  <div class='header'>
-                      <div class='avatar'>
-                        <img src=${newData.comments[i].user.image.webp} alt="currentUser" />
-                      </div>
-                      <p class='name'>${newData.comments[i].user.username}</p>
-                      <p class='date'>${newData.comments[i].createdAt}</p>
-                      </div>
-                          <div class='icon' onclick="toggle(${newData.comments[i].id});">
-                            <div class="reply">${replySign}
-                              <p>Reply</p>
-                            </div>
-                          </div>
-
-                      <div class='content'>${newData.comments[i].content}</div>
-
-                          <form id=replyForm${newData.comments[i].id} class='reply-section' onsubmit="event.preventDefault(); replyComment(${newData.comments[i].id});">
-                            <div class=reply-avatar>
-                            <img src=${newData.currentUser.image.webp} alt='profile-img' />
-                          </div>
-                          <textarea id="reply${newData.comments[i].id}" name="reply" class='' placeholder='@${newData.comments[i].user.username}' rows='4'></textarea>
-                              <button class="btn" type="submit">
-                                  Reply
-                              </button>
-                            </form>
-
-
-                  </div>
-              </div>
-      </div>
-
-              `;
+                  `;
 
         for (let j = 0; j < newData.comments[i].replies.length; j++) {
           // newData.comments[i].replies[i]
           htmlStructure += `
-         <div class='row'>
-          <div class='sub-card'>
-            <div class='line'></div>
-            <div class='card'>
-            <div class='vote'>
-                <div class='vote-icon plus' onclick="plusOperation(${
-                  newData.comments[i].replies[j].id
-                })"> ${plusSign} </div>
-                    <p id=#${
+             <div class='row'>
+              <div class='sub-card'>
+                <div class='line'></div>
+                <div class='card'>
+                <div class='vote'>
+                    <div class='vote-icon plus' onclick="plusOperation(${
                       newData.comments[i].replies[j].id
-                    } class='vote-text'>${
+                    })"> ${plusSign} </div>
+                        <p id=#${
+                          newData.comments[i].replies[j].id
+                        } class='vote-text'>${
             newData.comments[i].replies[j].score
           }</p>
-                    <div class='vote-icon minus' onclick="minusOperation(${
-                      newData.comments[i].replies[j].id
-                    })">${minusSign} </div>
-            </div>
+                        <div class='vote-icon minus' onclick="minusOperation(${
+                          newData.comments[i].replies[j].id
+                        })">${minusSign} </div>
+                </div>
 
-              <div class='header'>
-                  <div class='avatar'>
-                      <img src=${
-                        newData.comments[i].replies[j].user.image.webp
-                      } alt="currentUser" class='replies-img' />
-                      </div>
-                            <p class='name'>${
-                              newData.comments[i].replies[j].user.username
-                            }</p>
-                            <p class='date'>${
-                              newData.comments[i].replies[j].createdAt
-                            }</p>
+                  <div class='header'>
+                      <div class='avatar'>
+                          <img src=${
+                            newData.comments[i].replies[j].user.image.webp
+                          } alt="currentUser" class='replies-img' />
                           </div>
-                        <div class='icon'>
-                          ${
-                            newData.currentUser.username ===
-                            newData.comments[i].replies[j].user.username
-                              ? `<button class="button-reply" onclick="confirmDelete(${newData.comments[i].replies[j].id})">
-                              <div style='margin-right:8px'>${deleteSign}</div>
-                                            <span>Delete</span></button>
-                                            <button class="button-reply"><div style='margin-right:8px'>${editSign}</div>
-                                            <span>Edit</span></button>
-                                        `
-                              : `<div class='reply' onclick="toggle(${newData.comments[i].replies[j].id});">
-                             <div>${replySign}</div>
-                             <p>Reply</p>
-                          </div>`
-                          }
+                                <p class='name'>${
+                                  newData.comments[i].replies[j].user.username
+                                }</p>
+                                <p class='date'>${
+                                  newData.comments[i].replies[j].createdAt
+                                }</p>
+                              </div>
+                            <div class='icon'>
+                              ${
+                                newData.currentUser.username ===
+                                newData.comments[i].replies[j].user.username
+                                  ? `<button class="delete" onclick="confirmDelete(${newData.comments[i].replies[j].id})">
+                                  <div style='margin-right:8px'>${deleteSign}</div>
+                                                <span>Delete</span></button>
+                                                <button class="edit" onclick="editComment()"><div style='margin-right:8px'>${editSign}</div>
+                                                <span>Edit</span></button>
+                                            `
+                                  : `<div class='reply' onclick="toggle(${newData.comments[i].replies[j].id});">
+                                 <div>${replySign}</div>
+                                 <p>Reply</p>
+                              </div>`
+                              }
 
-                           </div>
-                          <div class='content'>
-                              <span class='initial'>@${
-                                newData.comments[i].replies[j].replyingTo
-                              }</span> ${newData.comments[i].replies[j].content}
-                          </div>
-                          <form id=replyForm${
-                            newData.comments[i].replies[j].id
-                          } class='reply-section' onsubmit="event.preventDefault(); kenkey(${
+                               </div>
+                              <div class='content'>
+                                  <span class='initial'>@${
+                                    newData.comments[i].replies[j].replyingTo
+                                  }</span> ${
+            newData.comments[i].replies[j].content
+          }
+                              </div>
+                              <form id=replyForm${
+                                newData.comments[i].replies[j].id
+                              } class='reply-section' onsubmit="event.preventDefault(); kenkey(${
             newData.comments[i].id
           }, ${newData.comments[i].replies[j].id})">
-                            <div class=reply-avatar>
-                            <img src=${
-                              newData.currentUser.image.webp
-                            } alt='profile-img' />
-                          </div>
-                          <textarea id="replyReply${
-                            newData.comments[i].replies[j].id
-                          }" name="replyReply${
+                                <div class=reply-avatar>
+                                <img src=${
+                                  newData.currentUser.image.webp
+                                } alt='profile-img' />
+                              </div>
+                              <textarea id="replyReply${
+                                newData.comments[i].replies[j].id
+                              }" name="replyReply${
             newData.comments[i].replies[j].id
           }" placeholder='@${
             newData.comments[i].user.username
           }' rows='4'> </textarea>
-                              <button class="btn" type="submit">
-                                  Reply
-                              </button>
-                            </form>
-                          </div>
-                          
-             </div>
-          </div>
-                  `;
+                                  <button class="btn" type="submit">
+                                      Reply
+                                  </button>
+                                </form>
+                              </div>
+
+                 </div>
+              </div>
+                      `;
         }
       }
 
       htmlStructure += `
-              <form id="row" onsubmit="event.preventDefault(); send();">
-                  <div class='comment-section'>
-                      <div class='comment-avatar'>
-                          <img src=${newData.currentUser.image.webp} class='' />
+                  <form id="row" onsubmit="event.preventDefault(); send();">
+                      <div class='comment-section'>
+                          <div class='comment-avatar'>
+                              <img src=${newData.currentUser.image.webp} class='' />
+                          </div>
+                          <textarea id="post" name="post" placeholder='Add a comment...' rows='5'></textarea>
+                          <button class='btn btn send' type="submit">Send</button>
                       </div>
-                      <textarea id="post" name="post" placeholder='Add a comment...' rows='5'></textarea>
-                      <button class='btn btn send' type="submit">Send</button>
-                  </div>
-              </form>
-          `;
+                  </form>
+              `;
 
       htmlStructure += `<div id="modal" class='module-delete'>
-              <div class='inner-module'>
-                  <h3 class='module-title'>Delete comment</h3>
-                  <p class='module-text'>Are you sure you want to delete this comment?. This will remove the comment and can not be undone.</p>
-                  <div class="btn-wrapper">
-                      <button class="btn btn-cancel" onclick="cancelModal()">No, Cancel</button>
-                      <button class="btn btn-delete" onclick="deleteOperation()">Yes, Delete</button>
+                  <div class='inner-module'>
+                      <h3 class='module-title'>Delete comment</h3>
+                      <p class='module-text'>Are you sure you want to delete this comment?. This will remove the comment and can not be undone.</p>
+                      <div class="btn-wrapper">
+                          <button class="btn btn-cancel" onclick="cancelModal()">No, Cancel</button>
+                          <button class="btn btn-delete" onclick="deleteOperation()">Yes, Delete</button>
+                      </div>
                   </div>
-              </div>
-          </div>`;
+              </div>`;
 
       document.querySelector("#main").innerHTML = htmlStructure;
 
@@ -312,7 +314,8 @@
 
       function confirmDelete(id) {
         let modal = document.getElementById("modal");
-        modal.style.display = "flex";
+        // modal.style.display = "flex";
+        modal.classList.add("show-module");
         deleteID = id;
       }
 
@@ -361,16 +364,27 @@
       }
 
       function toggle(id) {
-        let form = document.getElementById(`replyForm${id}`);
-        if (form.style.display === "grid") {
-          form.style.display = "none";
-          form.classList.remove("active");
+        let x = window.matchMedia("(max-width:700px)");
+        if (x.matches) {
+          let form = document.getElementById(`replyForm${id}`);
+          if (form.style.display === "grid") {
+            form.style.display = "none";
+            form.classList.remove("active");
+          } else {
+            form.style.display = "grid";
+            form.classList.add("active");
+          }
         } else {
-          form.style.display = "grid";
-          form.classList.add("active");
+          let form = document.getElementById(`replyForm${id}`);
+          if (form.style.display === "flex") {
+            form.style.display = "none";
+            form.classList.remove("active");
+          } else {
+            form.style.display = "flex";
+            form.classList.add("active");
+          }
         }
       }
-
       function cancelModal() {
         console.log("rice");
         let modal = document.getElementById("modal");
@@ -433,6 +447,27 @@
         }
         localStorage.setItem("userData", JSON.stringify(newData));
         window.location.reload();
+      }
+
+      function editComment() {
+        const editbutton = document.querySelector(".edit");
+        const deletebutton = document.querySelector(".delete");
+        const content = editbutton.parentElement.nextElementSibling;
+        const textArea = content.innerText;
+        editbutton.style.opacity = "0.6";
+        deletebutton.style.opacity = "0.6";
+        content.innerHTML = `<textarea rows="4" cols="50" class="editedComment">${textArea} </textarea>
+      <div class="btn-update-wrapper" ><button class="btn btn-update">UPDATE</button></div>`;
+
+        const updateButton = document.querySelector(".btn-update");
+        const newTextArea = document.querySelector(".editedComment");
+        updateButton.onclick = () => {
+          content.innerHTML = `${newTextArea.value}`;
+          editbutton.style.opacity = "1";
+          deletebutton.style.opacity = "1";
+          editbutton.style.cursor = "pointer";
+          deletebutton.style.cursor = "pointer";
+        };
       }
     </script>
   </body>

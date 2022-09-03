@@ -1,5 +1,5 @@
 #main{
-    width: 60%;
+    width: 70%;
     margin-left: auto;
     margin-right: auto;
     
@@ -162,6 +162,8 @@ Footer
     gap: 5px;
     align-items: center;
     cursor: pointer;
+    border: none;
+    background-color: white;
 }
 
 .reply:hover {
@@ -219,6 +221,10 @@ textarea {
     display: flex;
     transition: display 0.3s;
     gap: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    
 }
 
 .comment-section textarea {
@@ -276,6 +282,7 @@ textarea {
     .comment-section {
         display: grid;
         grid-template-areas:
+        
             "input input input input"
             "avatar avater reply reply";
     }
@@ -379,10 +386,4 @@ textarea {
 .btn-delete {
     background-color: var(--soft-red);
     font-weight: bold;
-}
-.button-reply{
-    border: none;
-    display: flex;
-    background-color: inherit;
-    
 }
