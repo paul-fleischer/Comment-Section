@@ -227,6 +227,8 @@ textarea {
     
 }
 
+
+
 .comment-section textarea {
     height: 95px;
     padding: 20px;
@@ -337,6 +339,7 @@ textarea {
 
 .module-delete.show-module {
     display: flex;
+    
 } 
 
 .module-delete {
@@ -347,13 +350,14 @@ textarea {
     top: 0;
     z-index: 20;
     display: none;
+    left: 0;
 } 
 
 .inner-module {
     position: fixed;
     background-color: white;
     padding: 25px;
-    width: max-content;
+    width: 73%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -362,6 +366,9 @@ textarea {
     gap: 20px;
     border-radius: 10px;
     z-index: 30;
+    
+    line-height: 1.5em;
+    
 }
 
 .module-title {
@@ -386,4 +393,10 @@ textarea {
 .btn-delete {
     background-color: var(--soft-red);
     font-weight: bold;
+}
+
+@media (min-width: 800px) {
+    .inner-module{
+        width: 30%;
+    }
 }
