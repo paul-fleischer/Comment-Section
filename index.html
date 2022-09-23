@@ -67,8 +67,7 @@
               },
               {
                 id: 4,
-                content:
-                  "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
+                content: "I couldn't agree more with this. Everything moves so fast and it always seems like everyone knows the newest library/framework. But the fundamentals are what stay constant.",
                 createdAt: "2 days ago",
                 score: 2,
                 replyingTo: "ramsesmiron",
@@ -158,36 +157,21 @@
                 <div class='line'></div>
                 <div class='card'>
                 <div class='vote'>
-                    <div class='vote-icon plus' onclick="plusOperation(${
-                      newData.comments[i].replies[j].id
-                    })"> ${plusSign} </div>
-                        <p id=#${
-                          newData.comments[i].replies[j].id
-                        } class='vote-text'>${
-            newData.comments[i].replies[j].score
-          }</p>
-                        <div class='vote-icon minus' onclick="minusOperation(${
-                          newData.comments[i].replies[j].id
-                        })">${minusSign} </div>
+                    <div class='vote-icon plus' onclick="plusOperation(${newData.comments[i].replies[j].id})"> ${plusSign} </div>
+                        <p id=#${newData.comments[i].replies[j].id} class='vote-text'>${newData.comments[i].replies[j].score}</p>
+                        <div class='vote-icon minus' onclick="minusOperation(${newData.comments[i].replies[j].id})">${minusSign} </div>
                 </div>
 
                   <div class='header'>
                       <div class='avatar'>
-                          <img src=${
-                            newData.comments[i].replies[j].user.image.webp
-                          } alt="currentUser" class='replies-img' />
+                          <img src=${newData.comments[i].replies[j].user.image.webp} alt="currentUser" class='replies-img' />
                           </div>
-                                <p class='name'>${
-                                  newData.comments[i].replies[j].user.username
-                                }</p>
-                                <p class='date'>${
-                                  newData.comments[i].replies[j].createdAt
-                                }</p>
+                                <p class='name'>${newData.comments[i].replies[j].user.username}</p>
+                                <p class='date'>${newData.comments[i].replies[j].createdAt}</p>
                               </div>
                             <div class='icon'>
                               ${
-                                newData.currentUser.username ===
-                                newData.comments[i].replies[j].user.username
+                                newData.currentUser.username === newData.comments[i].replies[j].user.username
                                   ? `<button class="delete" onclick="confirmDelete(${newData.comments[i].replies[j].id})">
                                   <div style='margin-right:8px'>${deleteSign}</div>
                                                 <span>Delete</span></button>
@@ -202,27 +186,15 @@
 
                                </div>
                               <div class='content'>
-                                  <span class='initial'>@${
-                                    newData.comments[i].replies[j].replyingTo
-                                  }</span> ${
-            newData.comments[i].replies[j].content
-          }
+                                  <span class='initial'>@${newData.comments[i].replies[j].replyingTo}</span> ${newData.comments[i].replies[j].content}
                               </div>
-                              <form id=replyForm${
-                                newData.comments[i].replies[j].id
-                              } class='reply-section' onsubmit="event.preventDefault(); kenkey(${
-            newData.comments[i].id
-          }, ${newData.comments[i].replies[j].id})">
-                                <div class=reply-avatar>
-                                <img src=${
-                                  newData.currentUser.image.webp
-                                } alt='profile-img' />
-                              </div>
-                              <textarea id="replyReply${
-                                newData.comments[i].replies[j].id
-                              }" name="replyReply${
+                              <form id=replyForm${newData.comments[i].replies[j].id} class='reply-section' onsubmit="event.preventDefault(); kenkey(${newData.comments[i].id}, ${
             newData.comments[i].replies[j].id
-          }" placeholder='@${
+          })">
+                                <div class=reply-avatar>
+                                <img src=${newData.currentUser.image.webp} alt='profile-img' />
+                              </div>
+                              <textarea id="replyReply${newData.comments[i].replies[j].id}" name="replyReply${newData.comments[i].replies[j].id}" placeholder='@${
             newData.comments[i].user.username
           }' rows='4'> </textarea>
                                   <button class="btn" type="submit">
@@ -270,17 +242,12 @@
         for (let i = 0; i < newData.comments.length; i++) {
           if (newData.comments[i].id === id) {
             newData.comments[i].score = newData.comments[i].score += 1;
-            document.getElementById(`#${newData.comments[i].id}`).textContent =
-              newData.comments[i].score;
+            document.getElementById(`#${newData.comments[i].id}`).textContent = newData.comments[i].score;
           } else {
             for (let j = 0; j < newData.comments[i].replies.length; j++) {
               if (newData.comments[i].replies[j].id === id) {
-                newData.comments[i].replies[j].score = newData.comments[
-                  i
-                ].replies[j].score += 1;
-                document.getElementById(
-                  `#${newData.comments[i].replies[j].id}`
-                ).textContent = newData.comments[i].replies[j].score;
+                newData.comments[i].replies[j].score = newData.comments[i].replies[j].score += 1;
+                document.getElementById(`#${newData.comments[i].replies[j].id}`).textContent = newData.comments[i].replies[j].score;
               }
             }
           }
@@ -293,17 +260,12 @@
         for (let i = 0; i < newData.comments.length; i++) {
           if (newData.comments[i].id === id) {
             newData.comments[i].score = newData.comments[i].score -= 1;
-            document.getElementById(`#${newData.comments[i].id}`).textContent =
-              newData.comments[i].score;
+            document.getElementById(`#${newData.comments[i].id}`).textContent = newData.comments[i].score;
           } else {
             for (let j = 0; j < newData.comments[i].replies.length; j++) {
               if (newData.comments[i].replies[j].id === id) {
-                newData.comments[i].replies[j].score = newData.comments[
-                  i
-                ].replies[j].score -= 1;
-                document.getElementById(
-                  `#${newData.comments[i].replies[j].id}`
-                ).textContent = newData.comments[i].replies[j].score;
+                newData.comments[i].replies[j].score = newData.comments[i].replies[j].score -= 1;
+                document.getElementById(`#${newData.comments[i].replies[j].id}`).textContent = newData.comments[i].replies[j].score;
               }
             }
           }
@@ -314,8 +276,9 @@
 
       function confirmDelete(id) {
         let modal = document.getElementById("modal");
-        //  modal.style.display = "flex";
+
         modal.classList.add("show-module");
+        modal.classList.remove("hide-module");
         deleteID = id;
       }
 
@@ -386,9 +349,9 @@
         }
       }
       function cancelModal() {
-        console.log("rice");
         let modal = document.getElementById("modal");
-        modal.style.display = "none";
+        modal.classList.remove("show-module");
+        modal.classList.add("hide-module");
       }
 
       function replyComment(id) {
